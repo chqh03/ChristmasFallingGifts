@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>선물 먹기</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #111;
+        }
+        canvas {
+
+        }
+    </style>
 </head>
 <body>
     <div class="game-container">
@@ -13,7 +26,72 @@
         <div id="score">score: 0</div>
         <div id="timer">time: 30</div>
         <div id="gameOver" style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px; color: red;"></div>
+        <canvas id="glitchCanvas" width="800" height="600" position='absolute'></canvas>
     </div>
     <script src="game.js"></script>
 </body>
+<body>
+    
+
+    <script>
+        const canvas = document.getElementById('glitchCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const text = "게임 오버";
+        const fontSize = 150;
+        const x = canvas.width / 2 - ctx.measureText(text).width / 2; // 텍스트 중앙 위치
+        const y = canvas.height / 2 + fontSize / 4; // 수직 중앙 위치
+
+        let isGameOver = false; // 게임 오버 상태
+
+        // 글리치 효과를 위한 랜덤 이동 함수
+        function getRandomOffset() {
+            return Math.floor(Math.random() * 20) - 10; // -10 ~ 10 범위의 값
+        }
+
+        // 글리치 텍스트 그리기
+        function drawGlitchText() {
+            // 배경 초기화
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 기본 텍스트 설정
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // 글리치 효과: 텍스트를 여러 번 그려서 왜곡 효과 만들기
+            for (let i = 0; i < 5; i++) {
+                const offsetX = getRandomOffset();
+                const offsetY = getRandomOffset();
+                const color = i % 2 === 0 ? 'red' : 'cyan';
+                ctx.fillStyle = color;
+                ctx.fillText(text, x + offsetX, y + offsetY);
+            }
+        }
+
+        // 게임 오버 상태 설정 함수
+        function GameOver() {
+            isGameOver = true; // 게임 오버 상태 활성화
+        }
+
+        // 게임 오버 상태 체크 및 글리치 텍스트 표시
+        function checkGameOver() {
+            if (isGameOver) {
+                drawGlitchText(); // 게임 오버 상태에서 글리치 텍스트 그리기
+            }
+        }
+
+        // 애니메이션 루프
+        function animate() {
+            checkGameOver();
+            requestAnimationFrame(animate); // 계속해서 애니메이션을 갱신
+        }
+
+        animate(); // 애니메이션 시작
+
+        // 테스트용: 3초 후에 게임 오버 상태로 전환
+        setTimeout(() => {
+            GameOver(); // 3초 후에 게임 오버 상태로 전환
+        }, 30000); // 3초 후에 게임 오버 상태 활성화
+    </script>
 </html>

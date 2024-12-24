@@ -13,14 +13,6 @@ let playerPositionX = gameContainer.offsetWidth / 2 - player.offsetWidth / 2;
 
 let gameInterval;
 let timerInterval;
-
-
-/*public class SimpleApplet extends Applet {
-    @Override
-    public void paint(Graphics g) {
-        g.drawString("게임 시작!", 50, 50);  // 텍스트 그리기
-    }
-}*/
 //alert('게임이 시작..')
 // 선물 클래스 생성
 class Gift {
@@ -31,7 +23,7 @@ class Gift {
         this.element.style.position = 'absolute';
         this.element.style.top = '0px'; // 화면 위에서 떨어지도록
         this.element.style.left = Math.random() * (gameContainer.offsetWidth - 50) + 'px'; // 랜덤한 X위치
-        this.speed = Math.random() * 8 + 15;  // 랜덤 속도 (7에서 12 사이)
+        this.speed = Math.random() + 1//* 5 + 2;  // 랜덤 속도 (7에서 12 사이)
         this.rotation = 0;  // 선물의 회전 각도 (0도부터 시작)
         gameContainer.appendChild(this.element);
     }
@@ -41,20 +33,42 @@ class Gift {
     fall() {
         let top = parseInt(this.element.style.top); // 현재 top 위치
         if (top + this.element.offsetHeight >= gameContainer.offsetHeight - player.offsetHeight &&
+            parseInt(this.element.style.left) >= playerPositionX) {
+               console.log("a part")
+        }
+        
+        if (top + this.element.offsetHeight >= gameContainer.offsetHeight - player.offsetHeight &&
+            parseInt(this.element.style.left) >= playerPositionX &&
+            parseInt(this.element.style.left) <= playerPositionX + player.offsetWidt) {
+                console.log('b part')
+            }
+        if (top + this.element.offsetHeight >= gameContainer.offsetHeight - player.offsetHeight &&
             parseInt(this.element.style.left) >= playerPositionX &&
             parseInt(this.element.style.left) <= playerPositionX + player.offsetWidth) {
+            //parseInt(this.element.style.right) <= playerPositionX &&
+            //parseInt(this.element.style.right) >= playerPositionX - offsetWidth) {
+           // parseInt(this.element.style.right) <= playerPositionX &&
+           // parseInt(this.element.style.right) >= playerPositionX + player.offsetWidth) {
             // 선물이 플레이어와 맞았을 때
             score++;
             scoreElement.innerText = `score: ${score}`;  // 점수 업데이트
             this.resetPosition();
         } else if (top >= gameContainer.offsetHeight) {
             // 선물이 바닥에 닿으면 위치 초기화
-            this.resetPosition();
-        } else {
+            //this.resetPosition();
+        } 
+        
+        else {
             this.element.style.top = top + this.speed + 'px'; // 선물이 떨어짐
-            this.rotation += 1;  // 1도씩 회전
-            this.element.style.transform = `rotate(${this.rotation}deg)`;  // 회전 적용
+            /*console.log("left: " + this.element.style.left);
+            console.log("playerPositionX: " + playerPositionX);
+            console.log("Plaer position x++ : ")
+            console.log("playerPositionX + player.offsetWidth: " + playerPositionX + player.offsetWidth);*/
+            //this.rotation += 1;  // 1도씩 회전
+            //this.element.style.transform = `rotate(${this.rotation}deg)`;  // 회전 적용
         }
+        
+        
     }
 
     resetPosition() {
@@ -85,9 +99,12 @@ function startTimer() {
             timerElement.innerText = `time: ${timer}`;  // 타이머 업데이트
         } else {
             clearInterval(timerInterval);
-            EndText.innerText = `game end!`
+           // document.write('text end!')
+           //document.write("안녕하세요, JavaScript!");
+          // backgroundImage = 'gameover2.png'
             gameOver(); // 타이머 종료 시 게임 종료 함수 호출
-            
+            scoreElement.hidden = true;
+            timerElement.hidden = true;
             gifts.fall()
         }
     }, 1000);
@@ -103,7 +120,7 @@ function dropGifts() {
 // 게임 종료 처리
 function gameOver() {
     gameOverElement.style.display = 'block';  // 게임 종료 메시지 보이기
-    //gameOverElement.innerText = `게임 종료! 최종 점수: ${score}`;  // 최종 점수 표시
+    gameOverElement.innerText = `게임 종료! 최종 점수: ${score}`;  // 최종 점수 표시
     clearInterval(gameInterval);  // 선물 떨어지기 종료
     gameBg = document.querySelector('.game-container').style.backgroundImage = "url('gameover2.png')";
     
@@ -139,9 +156,9 @@ function handleKeyUp(event) {
 // 게임 시작
 function startGame() {
     // 여러 개의 선물을 만들기
-    for (let i = 0; i < 5; i++) {  // 5개의 선물이 떨어지도록
+    //for (let i = 0; i < 5; i++) {  // 5개의 선물이 떨어지도록
         gifts.push(new Gift());
-    }
+    //}
 
     gameInterval = setInterval(dropGifts, Math.random() * 3 + 15); // 선물 떨어짐 간격
     startTimer();

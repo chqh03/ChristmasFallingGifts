@@ -24,11 +24,12 @@ body, html {
     background-position: center;  /* 배경 이미지가 화면 중앙에 위치하도록 설정 */
     background-repeat: no-repeat; /* 배경 이미지가 반복되지 않도록 설정 */
     height: 100vh;                /* 화면의 높이를 100%로 설정 (뷰포트 높이 기준) */
-    width: 100%;                  /* 화면의 너비를 100%로 설정 */
+    width: 150%;                  /* 화면의 너비를 100%로 설정 */
 }
 #player {
-    width: 20%;  /* 플레이어 이미지 크기 조정 */
-    height: 40%; /* 플레이어 이미지 크기 조정 */
+    width: 10%;
+    height : 10%;  /* 플레이어 이미지 크기 조정 */
+    height: 20%; /* 플레이어 이미지 크기 조정 */
     position: absolute;
     bottom: 10px;
     left: 375px;  /* 중앙에 위치 */
@@ -49,22 +50,14 @@ body, html {
     font-size: 50px;
     right : 30px;
     color: rgb(238, 174, 44);
-}
-.gift {
-    width: 550%;  /* 선물 이미지의 크기 */
-    height: 550%; /* 선물 이미지의 크기 */
-    position: absolute;
-}
-
-#timer {
     right: 10px;
 }
-
 .gift {
-    width: 250px;
-    height: 250px;
+    width: 5%;  /* 선물 이미지의 크기 */
+    height: 10%; /* 선물 이미지의 크기 */
     position: absolute;
 }
+
 
 #gameOver {
     font-size: 80px;
@@ -74,4 +67,11 @@ body, html {
 #endText {
     font-family: 'Undertale Mars Needs';
     font-size : 150;
+    position: absolute;
+}
+#text {
+    position: absolute; /* 텍스트의 위치를 절대값으로 설정 */
+    left: 100px; /* x 좌표 */
+    top: 150px;  /* y 좌표 */
+    font-size: 24px; /* 텍스트 크기 */
 }
