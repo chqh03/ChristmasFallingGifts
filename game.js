@@ -23,7 +23,7 @@ class Gift {
         this.element.style.position = 'absolute';
         this.element.style.top = '0px'; // 화면 위에서 떨어지도록
         this.element.style.left = Math.random() * (gameContainer.offsetWidth - 50) + 'px'; // 랜덤한 X위치
-        this.speed = Math.random() + 1//* 5 + 2;  // 랜덤 속도 (7에서 12 사이)
+        this.speed = Math.random() * 10 + 7;  // 랜덤 속도 (7에서 12 사이)
         this.rotation = 0;  // 선물의 회전 각도 (0도부터 시작)
         gameContainer.appendChild(this.element);
     }
@@ -55,7 +55,7 @@ class Gift {
             this.resetPosition();
         } else if (top >= gameContainer.offsetHeight) {
             // 선물이 바닥에 닿으면 위치 초기화
-            //this.resetPosition();
+            this.resetPosition();
         } 
         
         else {
@@ -109,7 +109,6 @@ function startTimer() {
         }
     }, 1000);
 }
-
 // 선물 떨어지기
 function dropGifts() {
     gifts.forEach(gift => {
@@ -156,9 +155,9 @@ function handleKeyUp(event) {
 // 게임 시작
 function startGame() {
     // 여러 개의 선물을 만들기
-    //for (let i = 0; i < 5; i++) {  // 5개의 선물이 떨어지도록
+    for (let i = 0; i < 5; i++) {  // 5개의 선물이 떨어지도록
         gifts.push(new Gift());
-    //}
+    }
 
     gameInterval = setInterval(dropGifts, Math.random() * 3 + 15); // 선물 떨어짐 간격
     startTimer();
